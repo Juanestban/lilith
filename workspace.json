@@ -2,6 +2,7 @@
   "$schema": "./node_modules/nx/schemas/workspace-schema.json",
   "version": 2,
   "projects": {
+    "custom-hooks": "packages/custom-hooks",
     "node-auth": "packages/node-auth"
   }
 }

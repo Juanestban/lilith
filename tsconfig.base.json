@@ -16,6 +16,7 @@
     "baseUrl": ".",
     "paths": {
       "@lilith/*": ["./*"],
+      "@lilith/custom-hooks": ["packages/custom-hooks/src/index.ts"],
       "@lilith/node-auth": ["packages/node-auth/src/index.ts"]
     }
   },
