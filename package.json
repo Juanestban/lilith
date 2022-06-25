@@ -76,6 +76,10 @@
   "workspaces": [
     "packages/**"
   ],
+  "author": {
+    "name": "Juan Esteban Echeverry Perdomo"
+  },
+  "description": "name of personal project called Lilith, with this we have a app for notes, library for auth with node and express also will have a custom-hooks",
   "lint-staged": {
     ".{js,jsx,ts,tsx}": "eslint --cache --fix",
     ".{js,jsx,ts,tsx,css,md}": "prettier --write"
