@@ -9,7 +9,9 @@ import { Button } from '../Button';
 
 import s from './Note.module.css';
 
-type NoteProps = Note;
+interface NoteProps extends Note {
+  // ...
+}
 
 const Note: FC<NoteProps> = ({ id, title, description }) => {
   const navigate = useNavigate();
