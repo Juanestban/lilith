@@ -1,0 +1,82 @@
+{
+  "$schema": "..\\..\\node_modules\\nx\\schemas\\project-schema.json",
+  "sourceRoot": "apps/notipad/src",
+  "projectType": "application",
+  "targets": {
+    "build": {
+      "executor": "@nrwl/web:webpack",
+      "outputs": ["{options.outputPath}"],
+      "defaultConfiguration": "production",
+      "options": {
+        "compiler": "swc",
+        "outputPath": "dist/apps/notipad",
+        "index": "apps/notipad/src/index.html",
+        "baseHref": "/",
+        "main": "apps/notipad/src/main.tsx",
+        "polyfills": "apps/notipad/src/polyfills.ts",
+        "tsConfig": "apps/notipad/tsconfig.app.json",
+        "assets": ["apps/notipad/src/favicon.ico", "apps/notipad/src/assets"],
+        "styles": ["apps/notipad/src/styles.css"],
+        "scripts": [],
+        "webpackConfig": "@nrwl/react/plugins/webpack"
+      },
+      "configurations": {
+        "development": {
+          "extractLicenses": false,
+          "optimization": false,
+          "sourceMap": true,
+          "vendorChunk": true,
+          "hmr": true
+        },
+        "production": {
+          "fileReplacements": [
+            {
+              "replace": "apps/notipad/src/environments/environment.ts",
+              "with": "apps/notipad/src/environments/environment.prod.ts"
+            }
+          ],
+          "optimization": true,
+          "outputHashing": "all",
+          "sourceMap": false,
+          "namedChunks": false,
+          "extractLicenses": true,
+          "vendorChunk": false
+        }
+      }
+    },
+    "serve": {
+      "executor": "@nrwl/web:dev-server",
+      "defaultConfiguration": "development",
+      "options": {
+        "buildTarget": "notipad:build",
+        "hmr": true
+      },
+      "configurations": {
+        "development": {
+          "buildTarget": "notipad:build:development",
+          "port": 4500
+        },
+        "production": {
+          "buildTarget": "notipad:build:production",
+          "hmr": false
+        }
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["apps/notipad/**/*.{ts,tsx,js,jsx}"]
+      }
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/apps/notipad"],
+      "options": {
+        "jestConfig": "apps/notipad/jest.config.ts",
+        "passWithNoTests": true
+      }
+    }
+  },
+  "tags": []
+}

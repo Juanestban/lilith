@@ -3,6 +3,8 @@
   "version": 2,
   "projects": {
     "custom-hooks": "packages/custom-hooks",
-    "node-auth": "packages/node-auth"
+    "node-auth": "packages/node-auth",
+    "notipad": "apps/notipad",
+    "notipad-e2e": "apps/notipad-e2e"
   }
 }
