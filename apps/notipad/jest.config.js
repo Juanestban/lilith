@@ -1,5 +1,5 @@
 /* eslint-disable */
-export default {
+module.exports = {
   displayName: 'notipad',
   preset: '../../jest.preset.js',
   transform: {
@@ -11,4 +11,5 @@ export default {
   },
   moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx'],
   coverageDirectory: '../../coverage/apps/notipad',
+  setupFilesAfterEnv: ['./src/setupTests.ts'],
 };

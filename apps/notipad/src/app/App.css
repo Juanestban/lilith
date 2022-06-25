@@ -1,1 +1,36 @@
 /* Your styles goes here. */
+
+.main-container {
+  max-width: 1200px;
+  padding: 20px;
+  border: 1px solid transparent;
+  margin: 0 auto;
+}
+
+header[role='navigation'] {
+  margin-bottom: 40px;
+}
+
+.container-form-input {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.container-form-input form {
+  display: flex;
+  justify-content: space-evenly;
+  width: 100%;
+}
+
+.input-note {
+  width: 80%;
+  font-size: large;
+  height: 50px;
+  margin-right: 10px;
+}
+
+.button-note-save {
+  padding-left: 20px;
+  padding-right: 20px;
+}
