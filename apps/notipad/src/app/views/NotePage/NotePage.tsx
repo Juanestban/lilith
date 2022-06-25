@@ -1,8 +1,8 @@
 import { FC, useEffect, FormEvent } from 'react';
 import cn from 'classnames';
-import { Link, useParams } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 
-import { Input } from '../../components';
+import { Button, Input } from '../../components';
 import { useNoteContext } from '../../contexts';
 
 import s from './NotePage.module.css';
@@ -13,8 +13,15 @@ interface NotePageProps {
 
 const NotePage: FC<NotePageProps> = () => {
   const { id } = useParams();
-  const { notes, noteToEdit, handleEdit, handleSet, handleClear } =
-    useNoteContext();
+  const navigate = useNavigate();
+  const {
+    notes,
+    noteToEdit,
+    handleEdit,
+    handleSet,
+    handleClear,
+    handleDelete,
+  } = useNoteContext();
   const classes = cn(s.test);
 
   const handleChange = (event: FormEvent) => {
@@ -22,6 +29,13 @@ const NotePage: FC<NotePageProps> = () => {
     const idNumber = Number(id);
 
     id && handleEdit({ id: idNumber, name, value });
+  };
+
+  const handleRemove = (id: string | undefined) => () => {
+    const idNormal = Number(id);
+
+    id && handleDelete(idNormal);
+    navigate('/home', { replace: true });
   };
 
   useEffect(() => {
@@ -54,19 +68,22 @@ const NotePage: FC<NotePageProps> = () => {
         </label>
         <label>
           description:
-          <Input
-            type="text"
+          <textarea
             name="description"
             className={cn(s.input, s.textarea)}
             value={noteToEdit.description}
             autoComplete="off"
             onChange={handleChange}
-          />
+          ></textarea>
         </label>
       </div>
+      <hr style={{ borderColor: 'gray' }} />
       <Link to="/" onClick={handleClear}>
         go home
       </Link>
+      <Button variant="danger" onClick={handleRemove(id)}>
+        delete
+      </Button>
     </section>
   );
 };

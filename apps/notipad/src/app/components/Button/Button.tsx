@@ -8,7 +8,7 @@ interface ButtonProps
     HTMLAttributes<HTMLButtonElement>,
     HTMLButtonElement
   > {
-  variant?: 'primary' | 'secondary';
+  variant?: 'primary' | 'secondary' | 'danger';
 }
 
 const Button = forwardRef<HTMLButtonElement, ButtonProps>(

@@ -11,7 +11,7 @@ interface HomePageProps {
   //  ...
 }
 
-const HomePage: FC<HomePageProps> = (props) => {
+const HomePage: FC<HomePageProps> = () => {
   const { notes } = useNoteContext();
   const classes = cn(s.test);
 

@@ -15,7 +15,22 @@
   border-color: #0b85d6;
 }
 
-.baseButton.primary:hover {
+.baseButton.primary:focus {
   border-color: #0b85d6;
   color: #0b85d6;
+}
+
+.baseButton.danger {
+  border-color: #960a0a;
+  color: #df1212;
+}
+
+.baseButton.danger:hover {
+  border-color: #5e0a0a;
+  color: #df1212;
+}
+
+.baseButton.danger:focus {
+  border-color: #960a0a;
+  color: #960a0a;
 }

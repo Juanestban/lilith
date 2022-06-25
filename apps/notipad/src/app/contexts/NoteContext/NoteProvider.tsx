@@ -24,6 +24,7 @@ type NoteContextProps = {
   handleClear: () => void;
   handleEdit: (noteToEdit: Edit) => void;
   handleSet: (note: Note) => void;
+  handleDelete: (id: number) => void;
 };
 
 interface NoteProviderProps {
@@ -45,12 +46,29 @@ const NoteContext = createContext<NoteContextProps>({
   handleEdit: mockFc,
   handleClear: mockFc,
   handleSet: mockFc,
+  handleDelete: mockFc,
 });
+
+const keystorage = '@LILITH_NOTE';
 
 function NoteProvider({ children }: NoteProviderProps) {
   const [noteForm, setNoteForm] = useState('');
   const [noteToEdit, setNoteToEdit] = useState<Note>(NOTE_TEMPLATE);
-  const [notes, setNotes] = useState<Note[]>([]);
+  const [notes, setNotes] = useState<Note[]>(() => {
+    const itemNotes = window.localStorage.getItem(keystorage);
+
+    if (itemNotes !== null) {
+      const notesTransformed = JSON.parse(itemNotes) as Note[];
+      return notesTransformed;
+    }
+
+    return [];
+  });
+
+  const handleStorage = (notes: Note[]) => {
+    setNotes(notes);
+    window.localStorage.setItem(keystorage, JSON.stringify(notes));
+  };
 
   const handleChange = (event: FormEvent<HTMLInputElement>) => {
     const { value } = event.target as HTMLInputElement;
@@ -65,7 +83,7 @@ function NoteProvider({ children }: NoteProviderProps) {
         description: '',
       };
 
-      setNotes([...notes, newNote]);
+      handleStorage([...notes, newNote]);
       setNoteForm('');
     }
   };
@@ -74,13 +92,19 @@ function NoteProvider({ children }: NoteProviderProps) {
     const updatedNotes = notes.map((note) =>
       note.id === id ? { ...note, [name]: value } : note
     );
-    setNotes(updatedNotes);
+    handleStorage(updatedNotes);
     setNoteToEdit({ ...noteToEdit, [name]: value });
   };
 
   const handleSet = (note: Note) => setNoteToEdit(note);
 
   const handleClear = () => setNoteToEdit(NOTE_TEMPLATE);
+
+  const handleDelete = (id: number) => {
+    const notesFiltered = notes.filter((n) => n.id !== id);
+
+    handleStorage(notesFiltered);
+  };
 
   return (
     <NoteContext.Provider
@@ -93,6 +117,7 @@ function NoteProvider({ children }: NoteProviderProps) {
         handleEdit,
         handleClear,
         handleSet,
+        handleDelete,
       }}
     >
       {children}
