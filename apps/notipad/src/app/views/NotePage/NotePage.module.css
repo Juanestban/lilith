@@ -1,0 +1,15 @@
+.containerLabel label {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  width: 100%;
+  margin-bottom: 20px;
+}
+
+.input {
+  margin-top: 5px;
+}
+
+.input.textarea {
+  height: 500px;
+}

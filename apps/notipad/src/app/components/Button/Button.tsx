@@ -1,19 +1,27 @@
-import { FC } from 'react';
+import { FC, forwardRef, DetailedHTMLProps, HTMLAttributes } from 'react';
 import cn from 'classnames';
 
 import s from './Button.module.css';
 
-interface ButtonProps {
-  //  ...
+interface ButtonProps
+  extends DetailedHTMLProps<
+    HTMLAttributes<HTMLButtonElement>,
+    HTMLButtonElement
+  > {
+  variant?: 'primary' | 'secondary';
 }
 
-const Button: FC<ButtonProps> = (props) => {
-  const classes = cn(s.test);
+const Button = forwardRef<HTMLButtonElement, ButtonProps>(
+  ({ children, variant = 'primary', className, ...props }, ref) => {
+    const classes = cn(s.baseButton, s[variant], className);
 
-  return (
-    <h1 className={classes}>Hello I'm a component called Button</h1>
-  )
-}
+    return (
+      <button ref={ref} className={classes} {...props}>
+        {children}
+      </button>
+    );
+  }
+) as FC<ButtonProps>;
 
-export default Button
-export type { ButtonProps }
+export default Button;
+export type { ButtonProps };

@@ -1,0 +1,21 @@
+.container {
+  border: 1px solid gray;
+  border-radius: 5px;
+  height: 100%;
+  padding: 10px;
+}
+
+.container:focus {
+  background-color: rgba(0, 153, 255, 0.3);
+}
+
+.container h3 {
+  margin: 0;
+}
+
+.container p {
+  width: 100%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}

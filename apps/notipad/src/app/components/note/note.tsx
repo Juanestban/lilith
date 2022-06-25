@@ -1,19 +1,24 @@
 import { FC } from 'react';
 import cn from 'classnames';
 
-import s from './note.module.css';
+import { Note } from '../../interfaces';
 
-interface noteProps {
-  //  ...
-}
+import s from './Note.module.css';
 
-const note: FC<noteProps> = (props) => {
+type NoteProps = Note;
+
+const Note: FC<NoteProps> = ({ id, title, description }) => {
   const classes = cn(s.test);
 
   return (
-    <h1 className={classes}>Hello I'm a component called note</h1>
-  )
-}
+    <div className={s.container} tabIndex={0}>
+      <h3 className={classes}>
+        {title} - <span>id: {id}</span>
+      </h3>
+      <p>{description}</p>
+    </div>
+  );
+};
 
-export default note
-export type { noteProps }
+export default Note;
+export type { NoteProps };

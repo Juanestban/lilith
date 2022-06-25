@@ -1,17 +1,23 @@
-import { FC } from 'react';
+import { FC, forwardRef, DetailedHTMLProps, InputHTMLAttributes } from 'react';
 import cn from 'classnames';
 
 import s from './Input.module.css';
 
-interface InputProps {
+interface InputProps
+  extends DetailedHTMLProps<
+    InputHTMLAttributes<HTMLInputElement>,
+    HTMLInputElement
+  > {
   //  ...
 }
 
-const Input: FC<InputProps> = (props) => {
-  const classes = cn(s.test);
+const Input = forwardRef<HTMLInputElement, InputProps>(
+  ({ className, ...props }, ref) => {
+    const classes = cn(s.baseInput, className);
 
-  return <h1 className={classes}>Hello I'm a component called Input</h1>;
-};
+    return <input ref={ref} className={classes} {...props} />;
+  }
+) as FC<InputProps>;
 
 export default Input;
 export type { InputProps };

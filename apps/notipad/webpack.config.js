@@ -1,37 +1,42 @@
+const path = require('path');
 const getConfig = require('@nrwl/react/plugins/webpack');
-const cssModuleRegex = /\.module\.css$/;
 
-module.exports = (config) => {
-  config = getConfig(config);
+module.exports = (preConfig, options) => {
+  const config = getConfig(preConfig);
+  const defaultOptions = {
+    importLoaders: 1,
+    modules: {
+      localIdentName: '[name]__[local]--[hash:base64:5]',
+    },
+  };
 
-  config.module.rules.forEach((rule, idx) => {
-    // Find rule tests for CSS.
-    // Then make sure it excludes .module.css files.
-    if (rule.test.test('foo.css')) {
-      rule.exclude = rule.exclude
-        ? Array.isArray(rule.exclude)
-          ? [...rule.exclude, cssModuleRegex]
-          : [rule.exclude, cssModuleRegex]
-        : cssModuleRegex;
-    }
-  });
-
-  // Add new rule to handle .module.css files by using css-loader
-  // with modules on.
+  const { cssModulesLoaderOptions = defaultOptions } = options;
   config.module.rules.push({
-    test: /\.module\.css$/,
-    use: [
-      { loader: 'style-loader' },
-      { loader: 'css-modules-typescript-loader' },
-      {
-        loader: 'css-loader',
-        options: {
-          modules: true,
-          importLoaders: 1,
-        },
-      },
-    ],
+    test: /\.css$/,
+    use: ['style-loader', 'css-loader'],
+    include: path.resolve(__dirname, 'apps/notipad'),
   });
+  const cssLoaderRule = config.module.rules.find(
+    (rule) => rule?.test?.toString() === '/\\.css$/'
+  );
+
+  if (cssLoaderRule) {
+    config.module.rules.push({
+      ...cssLoaderRule,
+      test: /\.module\.css$/,
+      use: cssLoaderRule.use.map((item) => {
+        if (item?.loader?.match(/[\/\\]css-loader/g)) {
+          return {
+            ...item,
+            options: { ...item.options, ...cssModulesLoaderOptions },
+          };
+        }
+
+        return item;
+      }),
+    });
+    cssLoaderRule.exclude = /\.module\.css$/;
+  }
 
   return config;
 };

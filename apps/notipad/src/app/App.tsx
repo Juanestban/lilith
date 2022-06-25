@@ -1,40 +1,47 @@
-import { Route, Routes, Link } from 'react-router-dom';
+import { FormEvent, useEffect } from 'react';
+import { Route, Routes, useLocation, useNavigate } from 'react-router-dom';
+
+import { Input, Button } from './components';
+import { useNoteContext } from './contexts';
+import { HomePage, NotePage } from './views';
 
 import './App.css';
 
 export function App() {
+  const { pathname } = useLocation();
+  const navigate = useNavigate();
+  const { noteForm, handleAdd, handleChange } = useNoteContext();
+
+  const handleSubmit = (event: FormEvent) => {
+    event.preventDefault();
+    handleAdd();
+  };
+
+  useEffect(() => {
+    pathname === '/' && navigate('/home', { replace: true });
+  }, [location.href]);
+
   return (
-    <>
+    <main className="main-container">
       <header role="navigation">
-        <ul>
-          <li>
-            <Link to="/">Home</Link>
-          </li>
-          <li>
-            <Link to="/page-2">Page 2</Link>
-          </li>
-        </ul>
+        <div className="container-form-input">
+          <form onSubmit={handleSubmit}>
+            <Input
+              type="text"
+              className="input-note"
+              placeholder="title of note"
+              value={noteForm}
+              onChange={handleChange}
+            />
+            <Button className="button-note-save">save note</Button>
+          </form>
+        </div>
       </header>
       <Routes>
-        <Route
-          path="/"
-          element={
-            <div>
-              This is the generated root route.{' '}
-              <Link to="/page-2">Click here for page 2.</Link>
-            </div>
-          }
-        />
-        <Route
-          path="/page-2"
-          element={
-            <div>
-              <Link to="/">Click here to go back to root page.</Link>
-            </div>
-          }
-        />
+        <Route path="/home" element={<HomePage />} />
+        <Route path="/note/:id" element={<NotePage />} />
       </Routes>
-    </>
+    </main>
   );
 }
 
