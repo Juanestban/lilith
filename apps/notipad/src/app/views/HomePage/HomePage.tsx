@@ -1,5 +1,4 @@
 import { FC } from 'react';
-import { Link } from 'react-router-dom';
 import cn from 'classnames';
 
 import { useNoteContext } from '../../contexts';
@@ -22,9 +21,7 @@ const HomePage: FC<HomePageProps> = () => {
       )}
       <article className={s.article}>
         {notes.map((note) => (
-          <Link key={note.id} to={`/note/${note.id}`} className={s.link}>
-            <Note {...note} />
-          </Link>
+          <Note key={note.id} {...note} />
         ))}
       </article>
     </div>

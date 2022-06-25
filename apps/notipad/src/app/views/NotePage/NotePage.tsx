@@ -50,10 +50,15 @@ const NotePage: FC<NotePageProps> = () => {
 
   return (
     <section>
-      <h1 className={classes}>Hello I'm a NotePage</h1>
-      <h2>
-        the id of this note page would be ={'>'} {id}
-      </h2>
+      <div className={s.containerButtons}>
+        <Link to="/" onClick={handleClear}>
+          go home
+        </Link>
+        <Button variant="danger" onClick={handleRemove(id)}>
+          delete
+        </Button>
+      </div>
+      <hr style={{ borderColor: 'gray', marginTop: 10, marginBottom: 20 }} />
       <div className={s.containerLabel}>
         <label>
           title:
@@ -77,13 +82,6 @@ const NotePage: FC<NotePageProps> = () => {
           ></textarea>
         </label>
       </div>
-      <hr style={{ borderColor: 'gray' }} />
-      <Link to="/" onClick={handleClear}>
-        go home
-      </Link>
-      <Button variant="danger" onClick={handleRemove(id)}>
-        delete
-      </Button>
     </section>
   );
 };
