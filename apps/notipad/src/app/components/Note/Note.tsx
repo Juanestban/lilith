@@ -2,14 +2,14 @@ import { FC } from 'react';
 import { Link } from 'react-router-dom';
 import cn from 'classnames';
 
-import { Note } from '../../interfaces';
+import { Note as INote } from '../../interfaces';
 import { useNoteContext } from '../../contexts';
 import { useNavigate } from 'react-router-dom';
 import { Button } from '../Button';
 
 import s from './Note.module.css';
 
-interface NoteProps extends Note {
+interface NoteProps extends INote {
   // ...
 }
 
